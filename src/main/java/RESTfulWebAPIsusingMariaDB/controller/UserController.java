@@ -3,6 +3,8 @@ package RESTfulWebAPIsusingMariaDB.controller;
 import RESTfulWebAPIsusingMariaDB.entity.User;
 import RESTfulWebAPIsusingMariaDB.global.URI;
 import RESTfulWebAPIsusingMariaDB.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping(URI.initial)
 public class UserController {
+    Logger logger = LoggerFactory.getLogger(UserController.class);
     // Service
     @Autowired
     private UserService userService;
-
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
+        logger.info("Working fine...");
         User savedUser = this.userService.creatUser(user);
         if (savedUser == null) {
             return ResponseEntity.badRequest().body("User already exists");
